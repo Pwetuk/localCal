@@ -16,6 +16,8 @@ class DataGetter:
 
     @classmethod
     def auth(cls) -> None:
+        if not cls.service is None:
+            return
         creds = None
         if os.path.exists("token.json"):
             creds = Credentials.from_authorized_user_file("token.json", cls.SCOPES)
@@ -39,7 +41,7 @@ class DataGetter:
             raise ce.ServiceAuthFailedError
         
     @classmethod
-    def _get_by_time(cls, start: datetime.datetime, end: datetime.datetime) -> list:
+    def get_by_time(cls, start: datetime.datetime, end: datetime.datetime) -> list:
 
         events = (cls.service.events().list(
                 calendarId="primary",
@@ -62,7 +64,7 @@ class DataGetter:
         
         start_week, end_week = DataConverter.get_week_bounds(time)
         
-        events = cls._get_by_time(start_week, end_week)
+        events = cls.get_by_time(start_week, end_week)
 
         return events
     
@@ -72,7 +74,7 @@ class DataGetter:
 
         start_month, end_month = DataConverter.get_month_bounds(time)
 
-        events = cls._get_by_time(start_month, end_month)
+        events = cls.get_by_time(start_month, end_month)
 
         return events
     
@@ -102,3 +104,4 @@ class DataGetter:
             return False
         
         return True
+

@@ -1,4 +1,7 @@
 import datetime
+import calendar
+
+NEED_START = True
 
 class DataConverter:
 
@@ -43,4 +46,37 @@ class DataConverter:
         else:
             end = datetime.datetime(start.year + 1, start.month + 1, start.day)
         return start, end
+    
+
+    def get_x_next_month(obj: datetime.datetime, number: int, need_start=False) -> datetime.datetime:
+        """
+        Returns datetime object after number of months. Number can be positive or negative. If negative function returns datetime of previous monthes.
+        need_start parameter shows if should start of month or exact same day and time returened.
+        If next month have less days than giving returns last day is used
+        """
+
+        days = obj.day
+        months = obj.month + number - 1
+        years = obj.year
+        years += (months // 12) 
         
+        if months >= 12 or months < 0:
+            months = (months % 12)
+        
+        if need_start:
+            new_time = datetime.time(0)
+            days = 1
+            
+        else:
+            new_time = obj.time()
+        
+        months += 1
+
+        if calendar.monthrange(years, months)[1] < days:
+            days = calendar.monthrange(years, months)[1]
+        
+        new_date = datetime.date(years, months, days)
+        
+        result_date = datetime.datetime.combine(new_date, new_time)
+        
+        return result_date
