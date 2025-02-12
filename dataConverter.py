@@ -11,6 +11,11 @@ class DataConverter:
         """
         return obj.isoformat() + "Z"
 
+    def get_day_start(obj: datetime.datetime) -> datetime.datetime:
+
+        date = obj.date()
+        result = datetime.datetime(date.year, date.month, date.day)
+        return result
 
     def get_week_start(obj: datetime.datetime) -> datetime.datetime:
         """
@@ -28,6 +33,7 @@ class DataConverter:
         date = obj.date()
         result = datetime.datetime(date.year, date.month, 1)
         return result
+    
     
     def get_week_bounds(obj: datetime.datetime) -> (datetime.datetime, datetime.datetime):
         """
@@ -47,6 +53,12 @@ class DataConverter:
             end = datetime.datetime(start.year + 1, start.month + 1, start.day)
         return start, end
     
+    def get_day_bounds(obj: datetime.datetime) -> (datetime.datetime, datetime.datetime):
+        
+        start_day = DataConverter.get_day_start(obj)
+        end_day = start_day + datetime.timedelta(days=1)
+
+        return start_day, end_day
 
     def get_x_next_month(obj: datetime.datetime, number: int, need_start=False) -> datetime.datetime:
         """

@@ -79,6 +79,15 @@ class DataGetter:
         return events
     
     @classmethod
+    def get_for_day(cls, time: datetime.datetime) -> list:
+        cls._check_if_none()
+        day_bounds = DataConverter.get_day_bounds(time)
+
+        events = cls.get_by_time(*day_bounds)
+
+        return events
+
+    @classmethod
     def add_event(cls, name: str, event_start: datetime.datetime, event_end: datetime.datetime, loc="") -> bool:
         cls._check_if_none()
         

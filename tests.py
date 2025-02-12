@@ -2,7 +2,7 @@ import unittest
 import datetime
 
 import dataConverter as dt
-import calCursor as cc
+import CalCursor as cc
 
 class TestStringMethods(unittest.TestCase):
 
@@ -108,14 +108,14 @@ class TestStringMethods(unittest.TestCase):
     
 
     def test_cal_cursor(self):
-        testing_cursor = cc.calCursor()
-        testing_cursor2 = cc.calCursor.from_datetime(datetime.datetime(
+        testing_cursor = cc.CalCursor()
+        testing_cursor2 = cc.CalCursor.from_datetime(datetime.datetime(
                 *datetime.datetime.now().timetuple()[:5]
         ))
         self.assertEqual(testing_cursor._get_cursor_time(), testing_cursor2._get_cursor_time())
 
 
-        testing_cursor = cc.calCursor.from_datetime(
+        testing_cursor = cc.CalCursor.from_datetime(
             datetime.datetime(2025, 1, 1)
         )
         testing_cursor.alter_week(7)
