@@ -51,6 +51,9 @@ class CalCursor:
     def get_data_for_interval(self, start_time: datetime.datetime, end_time: datetime.datetime) -> list:
         return DataGetter.get_by_time(start_time, end_time)
     
+    def add_event(self, name: str, start: datetime.datetime, end: datetime.datetime, loc=""):
+        return DataGetter.add_event(name, start, end, loc)
+    
     def _get_cursor_time(self) -> datetime.datetime:
         return self.time
 

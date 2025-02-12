@@ -9,7 +9,8 @@ class DataConverter:
         """
         Returns string that can be used to make request to Google calendar
         """
-        return obj.isoformat() + "Z"
+
+        return (obj + datetime.timedelta(hours=-3)).isoformat() + "Z"
 
     def get_day_start(obj: datetime.datetime) -> datetime.datetime:
 

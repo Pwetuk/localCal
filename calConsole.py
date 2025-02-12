@@ -1,4 +1,5 @@
 from calCursor import CalCursor
+import datetime
 
 class CalConsole:
     help_menu = """
@@ -40,11 +41,41 @@ class CalConsole:
                         print(self.cursor.get_data_for_day(), sep='\n')
                 case "time":
                     print(self.cursor)
+                case "event":
+                    if tokens[1] == "add":
+                        self.add_event()
+                    elif tokens[1] == "delete":
+                        self.delete_event()
                 case "stop":
                     print("Shutting down")
                     break
                 case _:
                     print(self.help_menu)
+
+
+    def add_event(self):
+        print("Enter name, start datetime, end datetime, location(can be blank)")
+        name = input()
+        start_datetime = self.accept_datetime_input()
+        end_datetime = self.accept_datetime_input()
+        loc = input()
+        if self.cursor.add_event(name, start_datetime, end_datetime, loc):
+            print("Added succesfully")
+        else:
+            print("Something went wrong")
+    
+
+    def delete_event(self):
+        pass
+    
+    def accept_datetime_input(self) -> datetime.datetime:
+        while 1:
+            input_data = map(int, input().split())
+            try:
+                result = datetime.datetime(*input_data)
+                return result
+            except ValueError as VE:
+                print(f'Datetime that you have entered isn\' correct because {VE}. Please repeat your input')
 
 
 
